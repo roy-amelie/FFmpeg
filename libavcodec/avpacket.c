@@ -71,9 +71,8 @@ void av_packet_free(AVPacket **pkt)
 {
     if (!pkt || !*pkt)
         return;
-    printf("before unref 1 \n");
+
     av_packet_unref(*pkt);
-    printf("after unref and before freep \n");
     av_freep(pkt);
 }
 
@@ -177,11 +176,9 @@ int av_packet_from_data(AVPacket *pkt, uint8_t *data, int size)
 
 void av_packet_free_side_data(AVPacket *pkt)
 {
-    printf("start av_packet_free_side_data \n");
     int i;
     for (i = 0; i < pkt->side_data_elems; i++)
         av_freep(&pkt->side_data[i].data);
-    printf("after loop in av_packet_free_side_data\n");
     av_freep(&pkt->side_data);
     pkt->side_data_elems = 0;
 }
@@ -406,13 +403,10 @@ int av_packet_copy_props(AVPacket *dst, const AVPacket *src)
 
 void av_packet_unref(AVPacket *pkt)
 {
-    printf("start unref \n");
     av_packet_free_side_data(pkt);
     printf("unref before av_buffer_unref \n");
     av_buffer_unref(&pkt->buf);
-    printf("unref before get_packet_defaults \n");
     get_packet_defaults(pkt);
-    printf("end unref \n");
 }
 
 int av_packet_ref(AVPacket *dst, const AVPacket *src)
