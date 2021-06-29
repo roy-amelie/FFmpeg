@@ -124,7 +124,7 @@ static void buffer_replace(AVBufferRef **dst, AVBufferRef **src)
 
 void av_buffer_unref(AVBufferRef **buf)
 {
-    printf("start unref %d\n", buf;
+    printf("start unref %d\n", buf);
     if (!buf || !*buf)
         return;
 
