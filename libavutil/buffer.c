@@ -107,16 +107,17 @@ AVBufferRef *av_buffer_ref(AVBufferRef *buf)
 static void buffer_replace(AVBufferRef **dst, AVBufferRef **src)
 {
     AVBuffer *b;
-    printf("buffer replace dst: %d, src: %d", dst, src);
+    printf("buffer replace dst: %d, src: %d\n", dst, src);
     b = (*dst)->buffer;
-    printf("buffer b: %d", b);
+    printf("buffer b: %d\n", b);
     if (src) {
         **dst = **src;
         av_freep(src);
     } else
         av_freep(dst);
-    printf("buffer refcount: %d", b->refcount);
+    printf("buffer refcount: %d\n", b->refcount);
     if (atomic_fetch_sub_explicit(&b->refcount, 1, memory_order_acq_rel) == 1) {
+        printf("c'est ici");
         b->free(b->opaque, b->data);
         av_freep(&b);
     }
