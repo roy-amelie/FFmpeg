@@ -71,7 +71,7 @@ void av_packet_free(AVPacket **pkt)
 {
     if (!pkt || !*pkt)
         return;
-
+    printf("before unref 1 \n");
     av_packet_unref(*pkt);
     av_freep(pkt);
 }
